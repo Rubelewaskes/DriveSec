@@ -1,0 +1,34 @@
+﻿@model List<DriveSec.Controllers.DriveSecController.ChosenViewModel>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    @if (ViewData["SuccessMessage"] != null)
+    {
+        <p class="text-success">@ViewData["SuccessMessage"]</p>
+    }
+    @if (ViewData["SuccessMessage"] != null)
+    {
+        <p class="text-danger">@ViewData["ErrorMessage"]</p>
+    }
+
+    @if (Model != null)
+    {
+        foreach (var chosen in Model)
+        {
+            <p>Вот ваш пользователь, милорд: @chosen.login</p>
+        }
+    }
+    <br />
+    <p>Сюда, загружать файлы, босс</p>
+    <form method="post" enctype="multipart/form-data" asp-action="UploadFile" asp-controller="DriveSec">
+        <input type="file" name="file" />
+        <input type="hidden" name="path" value="ваш_путь" />
+        <input type="hidden" name="proc" value="Upload" />
+        <button type="submit">Загрузить файл</button>
+    </form>
+
+</div>
