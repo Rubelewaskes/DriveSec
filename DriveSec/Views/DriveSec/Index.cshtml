@@ -24,7 +24,11 @@
     }
     <br />
     <p>Сюда, загружать файлы, босс</p>
-    <input type="file" name="'files'"/>
-
+    <form method="post" enctype="multipart/form-data" asp-action="UploadFile" asp-controller="DriveSec">
+        <input type="file" name="file" />
+        <input type="hidden" name="path" value="ваш_путь" />
+        <input type="hidden" name="proc" value="Upload" />
+        <button type="submit">Загрузить файл</button>
+    </form>
 
 </div>
