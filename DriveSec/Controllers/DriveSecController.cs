@@ -1,6 +1,9 @@
 ﻿using DriveSec.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -54,7 +57,8 @@ namespace DriveSec.Controllers
 
 
 
-        private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag";
+        // private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag"; //ключ Алексея
+        private readonly string _key = "y0_AgAAAAAJYhNrAAuhwgAAAAECKacJAAACVMEM5LNGk7DiV7_CyNkQH3CywQ";// ключ Григория
         private readonly string _path = "disk:/DriveSec";
 
 
@@ -74,6 +78,9 @@ namespace DriveSec.Controllers
                 //var filePath = Path.Combine(_path, file.FileName);
                 var filePath = (_path + "/" + file.FileName);
 
+                //Выгрузка инфы в БД
+                UploadFileDB(file.FileName, false, "", 1);
+
                 // Получение ссылки для загрузки файла на Яндекс Диск
                 var uploadLink = await api.Files.GetUploadLinkAsync(filePath, overwrite: true);
 
@@ -89,6 +96,22 @@ namespace DriveSec.Controllers
             {
                 return StatusCode(500, $"Возникла ошибка при загрузке файла: {ex.Message}");
             }
+        }
+
+        protected void UploadFileDB(string fileName, bool virusAvailiability, string virusDescrition, int folderId)
+        {
+            var newFile = new Models.File
+            {
+                FileName = fileName,
+                CreationDate = DateTime.Now,
+                VirusAvailiability = virusAvailiability,
+                VirusDescrition = virusDescrition,
+                UploaderId = 1, //Потом будем получать id авторизованного 
+                FolderId = folderId
+            };
+            _context.Files.Add(newFile);
+            _context.SaveChanges();
+            return;
         }
     }
 }
