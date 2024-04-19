@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("DriveSec")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7d192149cd394fe11845cdf35e77350800b2afc")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b26e9a765bda2ce1dca267dfbc5d3217b991fc4")]
 [assembly: System.Reflection.AssemblyProductAttribute("DriveSec")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DriveSec")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
