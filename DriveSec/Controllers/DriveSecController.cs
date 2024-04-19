@@ -179,17 +179,13 @@ namespace DriveSec.Controllers
 
                 // загрузка файла на компьютер
 
-
                 string filename = _context.Files
                     .Where(d => d.FileId == fileId)
                     .Select(s => s.FileName)
                     .FirstOrDefault();
 
-
-
                 // Скачиваем файл и сохраняем его по указанному пути
                 await api.Files.DownloadFileAsync(_path + "/" + filename, filename);
-
                 return RedirectToAction("Index", new { successMessage = "Файл успешно загружен на Ваш компьютер" });
             }
             catch (Exception ex)
@@ -201,9 +197,52 @@ namespace DriveSec.Controllers
         [HttpPost]
         public async Task<IActionResult> DeleteFile(int fileId)
         {
-            // Метод удаления файла
-            return RedirectToAction("Index", new { successMessage = "заглушка" });
+            try
+            {
+                var api = new DiskHttpApi(_key);
 
+                // Получение имени файла по его идентификатору
+                string filename = _context.Files
+                    .Where(d => d.FileId == fileId)
+                    .Select(s => s.FileName)
+                    .FirstOrDefault();
+
+
+                // Подготовка пути к удаляемому ресурсу на Яндекс.Диске
+                string resourcePath = _path + "/" + filename;
+
+                // Формирование URL запроса с закодированным путем к удаляемому ресурсу
+                var encodedPath = Uri.EscapeDataString(resourcePath);
+                var url = $"https://cloud-api.yandex.net/v1/disk/resources?path={encodedPath}";
+
+
+                // Создание объекта HttpClient
+                using (var httpClient = new HttpClient())
+                {
+                    // Установка заголовка авторизации
+                    httpClient.DefaultRequestHeaders.Add("Authorization", $"OAuth {_key}");
+
+                    // Отправка запроса методом DELETE
+                    var response = await httpClient.DeleteAsync(url);
+
+                    // Проверка статуса ответа
+                    response.EnsureSuccessStatusCode();
+                }
+
+                Models.File file = _context.Files.Find(fileId);
+                if (file != null)
+                {
+                    _context.Files.Remove(file);
+                    _context.SaveChanges(); // Сохранение изменений в базе данных
+
+                }
+
+                return RedirectToAction("Index", new { successMessage = "Файл успешно удален с Яндекс Диска" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Возникла ошибка при удалении файла: {ex.Message}");
+            }
         }
     }
 }
