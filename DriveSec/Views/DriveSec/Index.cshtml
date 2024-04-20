@@ -6,7 +6,6 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
     @if (ViewData["SuccessMessage"] != null)
     {
         <p class="text-success">@ViewData["SuccessMessage"]</p>
@@ -16,13 +15,13 @@
         <p class="text-danger">@ViewData["ErrorMessage"]</p>
     }
 
-    @if (ViewData["UsersData"] != null)
+    @* @if (ViewData["UsersData"] != null) ---ЭТА ХУЙНЯ ТЕПЕРЬ В ХЭДЭРЕ
     {
         foreach (var user in ViewData["UsersData"] as List<DriveSec.Controllers.DriveSecController.ChosenViewModel>)
         {
             <p>Вот ваш пользователь, милорд: @user.login</p>
         }
-    }
+    } *@
 
 
     <h2>Список файлов в папке:</h2>
