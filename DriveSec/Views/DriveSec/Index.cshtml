@@ -1,4 +1,4 @@
-﻿@model List<DriveSec.Models.File>
+﻿@model (List<DriveSec.Models.File> Files, List<DriveSec.Models.Folder> Folders)
 
 
 @{
@@ -27,7 +27,13 @@
 
     <h2>Список файлов в папке:</h2>
     <div class="file-container">
-        @foreach (var file in Model)
+        @foreach (var file in Model.Folders)
+        {
+            <div class="file-item">
+                <p>@file.FolderName</p>
+            </div>
+        }
+        @foreach (var file in Model.Files)
         {
             <div class="file-item">
                 <p>@file.FileName</p>

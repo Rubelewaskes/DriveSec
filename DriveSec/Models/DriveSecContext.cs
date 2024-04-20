@@ -78,7 +78,7 @@ public partial class DriveSecContext : DbContext
             entity.Property(e => e.FolderId).HasColumnName("folder_id");
             entity.Property(e => e.UploaderId).HasColumnName("uploader_id");
             entity.Property(e => e.VirusAvailiability).HasColumnName("virus_availiability");
-            entity.Property(e => e.VirusDescrition).HasColumnName("virus_descrition");
+            entity.Property(e => e.VirusDescription).HasColumnName("virus_description");
 
             entity.HasOne(d => d.Folder).WithMany(p => p.Files)
                 .HasForeignKey(d => d.FolderId)
@@ -128,9 +128,13 @@ public partial class DriveSecContext : DbContext
 
         modelBuilder.Entity<UsersFolder>(entity =>
         {
-            entity.HasKey(e => new { e.UserId, e.FolderId }).HasName("users_folder_pk");
+            entity.HasKey(e => e.UsersFolderId).HasName("users_folder_pkey");
 
             entity.ToTable("users_folder");
+
+            entity.Property(e => e.UsersFolderId)
+                .UseIdentityAlwaysColumn()
+                .HasColumnName("users_folder_id");
 
             entity.Property(e => e.UserId).HasColumnName("user_id");
             entity.Property(e => e.FolderId).HasColumnName("folder_id");

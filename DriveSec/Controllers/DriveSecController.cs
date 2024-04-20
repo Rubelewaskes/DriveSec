@@ -49,12 +49,16 @@ namespace DriveSec.Controllers
                     ViewData["ErrorMessage"] = "Ошибка при получении данных о пользователях из базы данных!";
                 }
 
-                // Получение списка файлов в папке с ID = 5
+                // Получение списка файлов в папке с ID = 1
                 var filesInFolder = _context.Files
-                    .Where(file => file.FolderId == 5)
+                    .Where(file => file.FolderId == 1)
                     .ToList();
 
-                return View(filesInFolder);
+                //Получение списка папок (говно, надо иерархию настроить как-то)
+                var foldersInFolder = _context.Folders
+                    .ToList();
+
+                return View((filesInFolder, foldersInFolder));
             }
             catch (Exception ex)
             {
@@ -63,24 +67,14 @@ namespace DriveSec.Controllers
             }
         }
 
-
-
-<<<<<<< Updated upstream
-
-        private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag"; //ключ Алексея
-        //private readonly string _key = "y0_AgAAAAAJYhNrAAuhwgAAAAECKacJAAACVMEM5LNGk7DiV7_CyNkQH3CywQ";// ключ Григория
+        //private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag"; //ключ Алексея
+        private readonly string _key = "y0_AgAAAAAJYhNrAAulOwAAAAECXGhVAAB3SSF1c3lJU61vXwDtn389M9CHLw";// ключ Григория
         private static readonly string _pathstandart = "disk:/DriveSec";
         private static readonly int _userid = 1; // пока тут 1, позже будет обычный userid
         private static readonly string _path;
         static DriveSecController() {
             _path = _pathstandart + "/" + _userid;
         }
-
-=======
-        //private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag"; //ключ Алексея
-        private readonly string _key = "y0_AgAAAAAJYhNrAAulOwAAAAECXGhVAAB3SSF1c3lJU61vXwDtn389M9CHLw";// ключ Григория
-        private readonly string _path = "disk:/DriveSec";
->>>>>>> Stashed changes
 
 
         [HttpPost]
@@ -99,9 +93,6 @@ namespace DriveSec.Controllers
                 //var filePath = Path.Combine(_path, file.FileName);
                 var filePath = (_path + "/" + file.FileName);
 
-                //Выгрузка инфы в БД
-                UploadFileDB(file.FileName, false, "", 5);
-
                 // Получение ссылки для загрузки файла на Яндекс Диск
                 var uploadLink = await api.Files.GetUploadLinkAsync(filePath, overwrite: true);
                 
@@ -110,6 +101,9 @@ namespace DriveSec.Controllers
                 {
                     await api.Files.UploadAsync(uploadLink, stream);
                 }
+
+                //Выгрузка инфы в БД
+                UploadFileDB(file.FileName, false, "", 1);
 
                 return RedirectToAction("Index", new { successMessage = "Файл успешно загружен на Яндекс Диск" });
             }
@@ -126,7 +120,7 @@ namespace DriveSec.Controllers
                 FileName = fileName,
                 CreationDate = DateTime.Now,
                 VirusAvailiability = virusAvailiability,
-                VirusDescrition = virusDescrition,
+                VirusDescription = virusDescrition,
                 UploaderId = 1, //Потом будем получать id авторизованного 
                 FolderId = folderId
             };
@@ -167,12 +161,28 @@ namespace DriveSec.Controllers
                     response.EnsureSuccessStatusCode();
                 }
 
+                //Выгрузка инфы в БД
+                UploadFolderDB(folderName, "");
+
                 return RedirectToAction("Index", new { successMessage = $"Папка '{folderName}' успешно создана на Яндекс Диске" });
             }
             catch (Exception ex)
             {
                 return StatusCode(500, $"Возникла ошибка при создании папки: {ex.Message}");
             }
+        }
+
+        protected void UploadFolderDB(string folderName, string folderDescription)
+        {
+            var newFolder = new Models.Folder
+            {
+                FolderName = folderName,
+                FolderDescription = folderDescription,
+                CreationDate = DateTime.Now
+            };
+            _context.Folders.Add(newFolder);
+            _context.SaveChanges();
+            return;
         }
 
 

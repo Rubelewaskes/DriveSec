@@ -13,7 +13,7 @@ public partial class File
 
     public bool VirusAvailiability { get; set; }
 
-    public string? VirusDescrition { get; set; }
+    public string? VirusDescription { get; set; }
 
     public int UploaderId { get; set; }
 

@@ -5,6 +5,7 @@ namespace DriveSec.Models;
 
 public partial class UsersFolder
 {
+    public int UsersFolderId { get; set; }
     public int UserId { get; set; }
 
     public int FolderId { get; set; }
