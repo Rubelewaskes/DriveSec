@@ -253,6 +253,8 @@ namespace DriveSec.Controllers
 
                 }
 
+                DeleteFileDB(fileId);
+
                 return RedirectToAction("Index", new { successMessage = "Файл успешно удален с Яндекс Диска" });
             }
             catch (Exception ex)
@@ -260,5 +262,19 @@ namespace DriveSec.Controllers
                 return StatusCode(500, $"Возникла ошибка при удалении файла: {ex.Message}");
             }
         }
+
+        protected void DeleteFileDB(int fileId)
+        {
+            var fileToDelete = _context.Files.FirstOrDefault(f => f.FileId == fileId);
+
+            if (fileToDelete != null)
+            {
+                _context.Files.Remove(fileToDelete);
+                _context.SaveChanges();
+            }
+            return;
+            
+        }
+
     }
 }
