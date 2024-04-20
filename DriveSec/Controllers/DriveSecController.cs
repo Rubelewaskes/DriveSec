@@ -65,6 +65,7 @@ namespace DriveSec.Controllers
 
 
 
+<<<<<<< Updated upstream
 
         private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag"; //ключ Алексея
         //private readonly string _key = "y0_AgAAAAAJYhNrAAuhwgAAAAECKacJAAACVMEM5LNGk7DiV7_CyNkQH3CywQ";// ключ Григория
@@ -75,6 +76,11 @@ namespace DriveSec.Controllers
             _path = _pathstandart + "/" + _userid;
         }
 
+=======
+        //private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag"; //ключ Алексея
+        private readonly string _key = "y0_AgAAAAAJYhNrAAulOwAAAAECXGhVAAB3SSF1c3lJU61vXwDtn389M9CHLw";// ключ Григория
+        private readonly string _path = "disk:/DriveSec";
+>>>>>>> Stashed changes
 
 
         [HttpPost]

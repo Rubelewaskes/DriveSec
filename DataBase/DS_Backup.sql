@@ -1,12 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 16rc1
--- Dumped by pg_dump version 16rc1
-
--- Started on 2024-04-12 17:46:01
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -63,7 +54,7 @@ CREATE TABLE public.files (
     file_name character varying(255) NOT NULL,
     creation_date timestamp without time zone NOT NULL,
     virus_availiability boolean NOT NULL,
-    virus_descrition text,
+    virus_description text,
     uploader_id integer NOT NULL,
     folder_id integer NOT NULL
 );
@@ -136,6 +127,7 @@ ALTER TABLE public.users OWNER TO postgres;
 --
 
 CREATE TABLE public.users_folder (
+    users_folder_id integer NOT NULL,
     user_id integer NOT NULL,
     folder_id integer NOT NULL,
     role character varying(32) NOT NULL
@@ -204,7 +196,7 @@ COPY public.change_history (change_history_id, file_id, user_id, change_descript
 -- Data for Name: files; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
-COPY public.files (file_id, file_name, creation_date, virus_availiability, virus_descrition, uploader_id, folder_id) FROM stdin;
+COPY public.files (file_id, file_name, creation_date, virus_availiability, virus_description, uploader_id, folder_id) FROM stdin;
 \.
 
 
@@ -327,7 +319,7 @@ ALTER TABLE ONLY public.folders
 --
 
 ALTER TABLE ONLY public.users_folder
-    ADD CONSTRAINT users_folder_pk PRIMARY KEY (user_id, folder_id);
+    ADD CONSTRAINT users_folder_pk PRIMARY KEY (users_folder_id);
 
 
 --
