@@ -15,22 +15,19 @@
         <p class="text-danger">@ViewData["ErrorMessage"]</p>
     }
 
-    @* @if (ViewData["UsersData"] != null) ---ЭТА ХУЙНЯ ТЕПЕРЬ В ХЭДЭРЕ
-    {
-        foreach (var user in ViewData["UsersData"] as List<DriveSec.Controllers.DriveSecController.ChosenViewModel>)
-        {
-            <p>Вот ваш пользователь, милорд: @user.login</p>
-        }
-    } *@
 
 
     <h2>Список файлов в папке:</h2>
     <div class="file-container">
-        @foreach (var file in Model.Folders)
-        {
+        @foreach (var folder in Model.Folders)
+        {  
             <div class="file-item">
-                <p>@file.FolderName</p>
-            </div>
+            <p>@folder.FolderName</p>
+                <form method="post" asp-action="DeleteFolder" asp-controller="DriveSec">
+                    <input type="hidden" name="folderId" value="@folder.FolderId" />
+                    <button type="submit">Удалить</button>
+                </form>
+            </div> 
         }
         @foreach (var file in Model.Files)
         {

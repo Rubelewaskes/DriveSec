@@ -7,6 +7,8 @@ public partial class Folder
 {
     public int FolderId { get; set; }
 
+    public string FolderWay { get; set; }
+
     public string FolderName { get; set; } = null!;
 
     public string? FolderDescription { get; set; }

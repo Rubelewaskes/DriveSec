@@ -5,7 +5,7 @@
 -- Dumped from database version 16.2 (Debian 16.2-1.pgdg120+2)
 -- Dumped by pg_dump version 16rc1
 
--- Started on 2024-04-20 15:13:52
+-- Started on 2024-04-25 13:09:29
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -93,11 +93,11 @@ ALTER TABLE public.files ALTER COLUMN file_id ADD GENERATED ALWAYS AS IDENTITY (
 
 CREATE TABLE public.folders (
     folder_id integer NOT NULL,
+    folder_way character varying(2559),
     folder_name character varying(255) NOT NULL,
     folder_description text,
     creation_date timestamp without time zone NOT NULL
 );
-
 
 ALTER TABLE public.folders OWNER TO postgres;
 
@@ -206,7 +206,6 @@ COPY public.change_history (change_history_id, file_id, user_id, change_descript
 --
 
 COPY public.files (file_id, file_name, creation_date, virus_availiability, virus_description, uploader_id, folder_id) FROM stdin;
-4	S00416-19424506.jpg	2024-04-20 14:54:38.05016	f		1	1
 \.
 
 
@@ -217,7 +216,6 @@ COPY public.files (file_id, file_name, creation_date, virus_availiability, virus
 --
 
 COPY public.folders (folder_id, folder_name, folder_description, creation_date) FROM stdin;
-1	Тест	smth	2024-04-20 11:52:01.559782
 \.
 
 
@@ -414,7 +412,7 @@ ALTER TABLE ONLY public.users_mac
     ADD CONSTRAINT users_mac_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
 
 
--- Completed on 2024-04-20 15:13:52
+-- Completed on 2024-04-25 13:09:29
 
 --
 -- PostgreSQL database dump complete

@@ -28,6 +28,15 @@ namespace DriveSec.Controllers
             public string password { get; set; }
         }
 
+        private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag";
+        private static readonly string _pathstandart = "disk:/DriveSec";
+        private static readonly int _userid = 1; // пока тут 1, позже будет обычный userid
+        private static readonly string _path;
+        static DriveSecController()
+        {
+            _path = _pathstandart + "/" + _userid;
+        }
+
         public IActionResult Index()
         {
             try
@@ -51,11 +60,11 @@ namespace DriveSec.Controllers
 
                 // Получение списка файлов в папке с ID = 1
                 var filesInFolder = _context.Files
-                    .Where(file => file.FolderId == 1)
+                    .Where(file => file.FolderId == 1)//_userid)
                     .ToList();
 
-                //Получение списка папок (говно, надо иерархию настроить как-то)
-                var foldersInFolder = _context.Folders
+                // Получение списка папок в папке с ID = 1
+                var foldersInFolder = _context.Folders.Where(d => d.FolderWay == _path)
                     .ToList();
 
                 return View((filesInFolder, foldersInFolder));
@@ -67,14 +76,7 @@ namespace DriveSec.Controllers
             }
         }
 
-        //private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag"; //ключ Алексея
-        private readonly string _key = "y0_AgAAAAAJYhNrAAulOwAAAAECXGhVAAB3SSF1c3lJU61vXwDtn389M9CHLw";// ключ Григория
-        private static readonly string _pathstandart = "disk:/DriveSec";
-        private static readonly int _userid = 1; // пока тут 1, позже будет обычный userid
-        private static readonly string _path;
-        static DriveSecController() {
-            _path = _pathstandart + "/" + _userid;
-        }
+       
 
 
         [HttpPost]
@@ -160,9 +162,8 @@ namespace DriveSec.Controllers
                     // Проверка статуса ответа
                     response.EnsureSuccessStatusCode();
                 }
-
                 //Выгрузка инфы в БД
-                UploadFolderDB(folderName, "");
+                UploadFolderDB(folderName, "", _path);
 
                 return RedirectToAction("Index", new { successMessage = $"Папка '{folderName}' успешно создана на Яндекс Диске" });
             }
@@ -172,11 +173,12 @@ namespace DriveSec.Controllers
             }
         }
 
-        protected void UploadFolderDB(string folderName, string folderDescription)
+        protected void UploadFolderDB(string folderName, string folderDescription, string folderWay)
         {
             var newFolder = new Models.Folder
             {
                 FolderName = folderName,
+                FolderWay = folderWay,
                 FolderDescription = folderDescription,
                 CreationDate = DateTime.Now
             };
@@ -245,14 +247,6 @@ namespace DriveSec.Controllers
                     response.EnsureSuccessStatusCode();
                 }
 
-                Models.File file = _context.Files.Find(fileId);
-                if (file != null)
-                {
-                    _context.Files.Remove(file);
-                    _context.SaveChanges(); // Сохранение изменений в базе данных
-
-                }
-
                 DeleteFileDB(fileId);
 
                 return RedirectToAction("Index", new { successMessage = "Файл успешно удален с Яндекс Диска" });
@@ -265,16 +259,74 @@ namespace DriveSec.Controllers
 
         protected void DeleteFileDB(int fileId)
         {
-            var fileToDelete = _context.Files.FirstOrDefault(f => f.FileId == fileId);
-
-            if (fileToDelete != null)
+            Models.File file = _context.Files.Find(fileId);
+            if (file != null)
             {
-                _context.Files.Remove(fileToDelete);
+                _context.Files.Remove(file);
                 _context.SaveChanges();
             }
             return;
             
         }
 
+        [HttpPost]
+        public async Task<IActionResult> DeleteFolder(int folderId)
+        {
+            try
+            {
+                var api = new DiskHttpApi(_key);
+
+                string folderName = _context.Folders
+                    .Where(d => d.FolderId == folderId)
+                    .Select(s => s.FolderName)
+                    .FirstOrDefault();
+
+                string resourcePath = _path + "/" + folderName + "/";
+
+                Console.WriteLine("ТЕСТОВЫЕ ПАРАМЕТРЫ");
+                Console.WriteLine(resourcePath);
+                Console.WriteLine(folderName);
+                Console.WriteLine(folderId);
+
+                var encodedPath = Uri.EscapeDataString(resourcePath);
+                var url = $"https://cloud-api.yandex.net/v1/disk/resources?path={encodedPath}";
+
+                using (var httpClient = new HttpClient())
+                { 
+                    httpClient.DefaultRequestHeaders.Add("Authorization", $"OAuth {_key}");
+
+                    var response = await httpClient.DeleteAsync(url);
+
+                    response.EnsureSuccessStatusCode();
+                }
+
+                DeleteFolderDB(folderId, folderName);
+
+                return RedirectToAction("Index", new { successMessage = "Папка успешно удалена с Яндекс Диска" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, $"Возникла ошибка при удалении файла: {ex.Message}");
+            }
+        }
+        protected void DeleteFolderDB(int folderId, string folderName)
+        {
+            Models.Folder folder = _context.Folders.Find(folderId);
+            string wayToFolder = _path + "/" + folderName;
+            if (folder != null)
+            {
+                Models.Folder daughterFolder = _context.Folders.Where(d => d.FolderWay == wayToFolder).FirstOrDefault();
+                while (daughterFolder != null)
+                {
+                    DeleteFolderDB(daughterFolder.FolderId, daughterFolder.FolderName);
+                    daughterFolder = _context.Folders.Where(d => d.FolderWay == wayToFolder).FirstOrDefault();
+                } 
+
+                _context.Folders.Remove(folder);
+                _context.SaveChanges();
+
+            }
+        }
+            
     }
 }

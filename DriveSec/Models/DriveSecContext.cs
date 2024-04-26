@@ -100,6 +100,7 @@ public partial class DriveSecContext : DbContext
             entity.Property(e => e.FolderId)
                 .UseIdentityAlwaysColumn()
                 .HasColumnName("folder_id");
+            entity.Property(e => e.FolderWay).HasColumnName("folder_way");
             entity.Property(e => e.CreationDate)
                 .HasColumnType("timestamp without time zone")
                 .HasColumnName("creation_date");
@@ -107,7 +108,12 @@ public partial class DriveSecContext : DbContext
             entity.Property(e => e.FolderName)
                 .HasMaxLength(255)
                 .HasColumnName("folder_name");
+            entity.HasMany(f => f.Files)
+            .WithOne(file => file.Folder)
+            .HasForeignKey(file => file.FolderId)
+            .OnDelete(DeleteBehavior.Cascade);
         });
+        
 
         modelBuilder.Entity<User>(entity =>
         {
