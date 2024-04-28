@@ -82,7 +82,17 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navigation navbar-nav mr-auto" style="height: 45vh">
                     <li>
-                        <a class="upld_btn btn btn-danger btn-lg" href="/upload">Загрузить</a>
+                        <form method="post" enctype="multipart/form-data" asp-action="UploadFile" asp-controller="DriveSec">
+                            @* <input type="file" name="file" onchange="this.form.submit()"  /> *@
+                            <div class="upld_btn btn btn-danger btn-lg" style="position: relative; overflow: hidden">
+                                Загрузить
+                                <input type="file" name="file" onchange="this.form.submit()" style="position: absolute; opacity: 0; right: 0; top: 0" />
+                            </div>
+                            @* <input type="hidden" name="path" value="ваш_путь" />
+                            <input type="hidden" name="proc" value="Upload" />
+                            <button type="submit">Загрузить файл</button> *@
+                        </form>
+                        @* <a class="upld_btn btn btn-danger btn-lg" href="/upload">Загрузить</a> *@
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">Журнал действий</a>
