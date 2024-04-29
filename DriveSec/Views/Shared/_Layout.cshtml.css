@@ -73,7 +73,6 @@ body, .container-fluid {
 
 .upld_btn {
     margin-top: 15px;
-    margin-bottom: 15px;
     background-color: #F21F1F;
     border-radius: 15px;
     font-size: 32px;
@@ -81,6 +80,17 @@ body, .container-fluid {
     width: 250px;
     height: 50px;
     padding: 0px;
+}
+
+.upld_fld_btn {
+    margin-top: 10px;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    font-size: 26px;
+    font-weight: 600;
+    width: 250px;
+    height: 50px;
+    padding: 5px;
 }
 
 .navigation .nav-item {

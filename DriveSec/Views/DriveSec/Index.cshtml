@@ -5,20 +5,89 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    @if (ViewData["SuccessMessage"] != null)
+<section class="mt-3">
+    @* @if (ViewData["SuccessMessage"] != null)
     {
         <p class="text-success">@ViewData["SuccessMessage"]</p>
     }
     @if (ViewData["SuccessMessage"] != null)
     {
         <p class="text-danger">@ViewData["ErrorMessage"]</p>
+    } *@
+
+    <div class="container px-0 ms-4">
+        <h1 class="text-white text-left" style="font-size: 32px; font-weight: 600;">
+            Файлы
+        </h1>
+    </div>
+
+</section>
+
+<section class="file-container">
+    @foreach (var folder in Model.Folders)
+    {
+        <div class="file-item d-flex flex-column align-items-center" style="margin-top: -20px;">
+            <svg width="175" height="175" viewBox="0 0 175 175" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M21.875 58.3333H148.325C150.005 58.3333 150.845 58.3333 151.487 58.6603C152.051 58.9479 152.51 59.4069 152.798 59.9714C153.125 60.6131 153.125 61.4532 153.125 63.1333V133.742C153.125 135.422 153.125 136.262 152.798 136.904C152.51 137.468 152.051 137.927 151.487 138.215C150.845 138.542 150.005 138.542 148.325 138.542H26.675C24.9948 138.542 24.1548 138.542 23.513 138.215C22.9485 137.927 22.4896 137.468 22.202 136.904C21.875 136.262 21.875 135.422 21.875 133.742V58.3333Z"
+                      fill="white" />
+                <path d="M21.875 40.4583C21.875 38.5727 21.875 37.6299 22.4608 37.0441C23.0466 36.4583 23.9894 36.4583 25.875 36.4583H71.2598C72.0773 36.4583 72.4861 36.4583 72.8536 36.6106C73.2212 36.7628 73.5102 37.0518 74.0882 37.6299L94.7917 58.3333H21.875V40.4583Z"
+                      fill="white" />
+            </svg>
+            <div class="d-flex flex-md-row" style="margin-top: -20px">
+                <p>@folder.FolderName</p>
+                <button type="button" class="tgle_menu btn btn-light btn-sm dropdown-toggle dropdown-toggle-split ms-2"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                    <span class="visually-hidden"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <form method="post" asp-action="DeleteFolder" asp-controller="DriveSec">
+                            <input type="hidden" name="folderId" value="@folder.FolderId" />
+                            <button type="submit" class="dropdown-item">Удалить</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
     }
+    @foreach (var file in Model.Files)
+    {
+        <div class="file-item d-flex flex-column align-items-center" style="margin-top: 10px;">
+            <svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                      d="M64 10V43L64 43.0544C63.9999 43.4785 63.9998 43.8906 64.0455 44.2305C64.097 44.6137 64.2226 45.051 64.5858 45.4142C64.949 45.7774 65.3863 45.903 65.7695 45.9545C66.1094 46.0002 66.5215 46.0001 66.9456 46L67 46H100V80C100 94.1421 100 101.213 95.6066 105.607C91.2132 110 84.1421 110 70 110H50C35.8579 110 28.7868 110 24.3934 105.607C20 101.213 20 94.1421 20 80V40C20 25.8579 20 18.7868 24.3934 14.3934C28.7868 10 35.8579 10 50 10H64ZM66 10V43C66 43.4997 66.0021 43.7738 66.0277 43.964L66.0287 43.9713L66.036 43.9723C66.2262 43.9979 66.5003 44 67 44H100V43.2843C100 39.1968 100 37.153 99.2388 35.3153C98.4776 33.4776 97.0325 32.0325 94.1422 29.1422L94.1421 29.1421L80.8579 15.8579C77.9676 12.9676 76.5224 11.5224 74.6847 10.7612C72.847 10 70.8032 10 66.7157 10H66Z"
+                      fill="white" />
+            </svg>
 
+            <div class="d-flex flex-md-row" style="margin-top: 5px">
+                <p>@file.FileName</p>
+                <button type="button"
+                        class="tgle_menu btn btn-light btn-sm dropdown-toggle dropdown-toggle-split ms-2"
+                        data-bs-toggle="dropdown" aria-expanded="false"
+                        style="height: 20px; width: 30px; margin-top: 7px; padding-top: 0px;">
+                    <span class="visually-hidden"></span>
+                </button>
+                <ul class="dropdown-menu">
+                    <li>
+                        <form method="post" asp-action="DownloadFile" asp-controller="DriveSec">
+                            <input type="hidden" name="fileId" value="@file.FileId" />
+                            <button type="submit" class="dropdown-item">Скачать</button>
+                        </form>
+                    </li>
+                    <li>
+                        <form method="post" asp-action="DeleteFile" asp-controller="DriveSec">
+                            <input type="hidden" name="fileId" value="@file.FileId" />
+                            <button type="submit" class="dropdown-item">Удалить</button>
+                        </form>
+                    </li>
+                </ul>
 
+            </div>
+        </div>
+    }
+</section>
 
-    <h2>Список файлов в папке:</h2>
-    <div class="file-container">
+    @* <section class="file-container">
         @foreach (var folder in Model.Folders)
         {  
             <div class="file-item">
@@ -43,11 +112,9 @@
                 </form>
             </div>
         }
-    </div>
+    </section> *@
 
-    <br />
-
-    <p>Создать папку</p>
+    @* <p>Создать папку</p>
 
     <form method="post" asp-action="CreateFolder" asp-controller="DriveSec">
     <input type="text" name="folderName" placeholder="Введите имя папки" />
@@ -61,11 +128,9 @@
         <input type="hidden" name="path" value="ваш_путь" />
         <input type="hidden" name="proc" value="Upload" />
         <button type="submit">Загрузить файл</button>
-    </form>
+    </form> *@
 
-</div>
-
-<style>
+@* <style>
     .file-container {
         display: flex;
         flex-wrap: wrap;
@@ -81,4 +146,4 @@
         margin-top:2px;
         border: 0.5px solid;
     }
-</style>
+</style> *@

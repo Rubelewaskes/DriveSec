@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@model (List<DriveSec.Models.File> Files, List<DriveSec.Models.Folder> Folders)
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -54,15 +56,25 @@
                 </a>
 
                 <div class="Name d-flex flex-column align-items-end align-middle">
+                    
+                    @* <p>mischa.stolbov@yandex.ru</p> *@
+                    @if (ViewData["SuccessMessage"] != null)
+                    {
+                        <p class="text-success">@ViewData["SuccessMessage"]</p>
+                    }
+                    @if (ViewData["SuccessMessage"] != null)
+                    {
+                        <p class="text-danger">@ViewData["ErrorMessage"]</p>
+                    }
+
                     @if (ViewData["UsersData"] != null)
                     {
                         foreach (var user in ViewData["UsersData"] as List<DriveSec.Controllers.DriveSecController.ChosenViewModel>)
                         {
-                            <p>@user.login</p>
+                            <h1>@user.login</h1>
                         }
                     }
-                    @* <p>mischa.stolbov@yandex.ru</p> *@
-                    <h1>Михаил С.</h1>
+                    @* <h1>Михаил С.</h1> *@
                 </div>
 
                 <a class="" href="/logout" style="margin-left: 10px; margin-right: 10px">
@@ -83,16 +95,25 @@
                 <ul class="navigation navbar-nav mr-auto" style="height: 45vh">
                     <li>
                         <form method="post" enctype="multipart/form-data" asp-action="UploadFile" asp-controller="DriveSec">
-                            @* <input type="file" name="file" onchange="this.form.submit()"  /> *@
-                            <div class="upld_btn btn btn-danger btn-lg" style="position: relative; overflow: hidden">
+                            <button class="upld_btn btn btn-danger btn-lg" style="position: relative; overflow: hidden">
                                 Загрузить
-                                <input type="file" name="file" onchange="this.form.submit()" style="position: absolute; opacity: 0; right: 0; top: 0" />
-                            </div>
-                            @* <input type="hidden" name="path" value="ваш_путь" />
-                            <input type="hidden" name="proc" value="Upload" />
-                            <button type="submit">Загрузить файл</button> *@
+                                <input type="file" name="file" onchange="this.form.submit()" style="cursor: pointer; position: absolute; opacity: 0; right: 0; top: 0" />
+                            </button>
                         </form>
-                        @* <a class="upld_btn btn btn-danger btn-lg" href="/upload">Загрузить</a> *@
+
+                        <!-- Кнопка для отправки файла -->
+                        @* <button type="button" class="upld_btn btn btn-danger btn-lg" data-bs-toggle="modal"
+                                data-bs-target="#fileDwnldModal">
+                            Загрузить
+                        </button> *@
+                        <!-- Кнопка для отправки файла -->
+
+                    </li>
+                    <li>
+                        <button type="button" class="upld_fld_btn btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#folderCreateModal">
+                            Создать папку
+                        </button>
+
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">Журнал действий</a>
@@ -110,16 +131,97 @@
                         style="height: 30px; font-size: 26px; font-weight: 600; margin-bottom: 15px; text-decoration: none;">
                         <a class="nav-link text-white" href="#">Недавние файлы</a>
                     </li>
-                    <li class="nav-item">
+                    @foreach (var file in Model.Files ?? new List<DriveSec.Models.File>())
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="#">@file.FileName</a>
+                        </li>
+                    }
+                    @* <li class="nav-item">
                         <a class="nav-link text-white" href="#">Файл 1</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link text-white" href="#">Файл 2</a>
-                    </li>
+                    </li> *@
                 </ul>
             </div>
 
         </nav>
+
+        <!-- Модальное окно создания папки -->
+        <div class="modal fade text-black" id="folderCreateModal" tabindex="-1" aria-labelledby="folderCreateModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <form method="post" asp-action="CreateFolder" asp-controller="DriveSec" class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="folderCreateModalLabel">Создание папки</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <input class="form-control me-2" type="text" name="folderName" placeholder="Введите имя папки">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                style="border-radius: 10px;">
+                            Отмена
+                        </button>
+                        <button type="submit" class="btn btn-primary" style="border-radius: 10px;">
+                            Создать папку
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <!-- Модальное окно создания папки -->
+
+        <!-- Модальное окно создания файла -->
+        @* <div class="modal fade text-black" id="fileDwnldModal" tabindex="-1" aria-labelledby="fileDwnldModalLabel"
+             aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <form class="modal-content" enctype="multipart/form-data" asp-action="UploadFile" asp-controller="DriveSec">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="fileDwnldModalLabel">Загрузка файла</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="container ps-0 d-flex flex-md-row">
+                            <div class="col-auto">
+                                <label for="filename">Название файла:</label>
+                                <input class="form-control" type="text" id="filename" name="filename"
+                                       placeholder="Введите название файла">
+                            </div>
+                            <div class="col-auto ms-3">
+                                <label for="usercreator" id="authorlabel">Автор:</label>
+                                <input class="form-control" type="text" id="usercreator" name="creator" value="test"
+                                       readonly>
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label for="users">Пользователи имеющие доступ:</label>
+                            <input class="form-control" type="text" id="users" name="users" readonly>
+                            <!-- <select class="form-select" aria-label="Пример выбора по умолчанию">
+                                <option selected>Откройте это меню выбора</option>
+                                <option value="1">Один</option>
+                                <option value="2">Два</option>
+                                <option value="3">Три</option>
+                            </select> -->
+                        </div>
+                        <div class="field">
+                            <h3>Описание файла</h3>
+                            <textarea class="form-control" id="description" name="description"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                style="border-radius: 10px;">
+                            Отмена
+                        </button>
+                        <button type="button" class="btn btn-primary" style="border-radius: 10px;">Создать файл</button>
+                    </div>
+                </form>
+            </div>
+        </div> *@
+        <!-- Модальное окно файла -->
 
          <main role="main" style="margin-left: 300px;">
              @RenderBody()

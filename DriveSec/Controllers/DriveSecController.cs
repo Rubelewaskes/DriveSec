@@ -50,12 +50,14 @@ namespace DriveSec.Controllers
 
                 if (usersData != null)
                 {
-                    ViewData["SuccessMessage"] = "Успешно получены данные о пользователях из базы данных!";
+                    /*ViewData["SuccessMessage"] = "Успешно получены данные о пользователях из базы данных!";*/
+                    ViewData["SuccessMessage"] = "Все гуд!";
                     ViewData["UsersData"] = usersData;
                 }
                 else
                 {
-                    ViewData["ErrorMessage"] = "Ошибка при получении данных о пользователях из базы данных!";
+                    /*ViewData["ErrorMessage"] = "Ошибка при получении данных о пользователях из базы данных!";*/
+                    ViewData["ErrorMessage"] = "Все не гуд!";
                 }
 
                 // Получение списка файлов в папке с ID = 1
