@@ -44,9 +44,10 @@ namespace DriveSec.Controllers
                 // Получение данных о пользователях
                 var usersData = _context.Users.Select(c => new ChosenViewModel
                 {
-                    login = _context.Users.Select(a => a.Login).FirstOrDefault(),
-                    password = _context.Users.Select(a => a.Password).FirstOrDefault()
+                    login = c.Login,
+                    password = c.Password
                 }).ToList();
+
 
                 if (usersData != null)
                 {
@@ -78,11 +79,9 @@ namespace DriveSec.Controllers
             }
         }
 
-       
 
-
-        [HttpPost]
-        public async Task<IActionResult> UploadFile(IFormFile file)
+            [HttpPost]
+        public async Task<IActionResult> UploadFile(IFormFile file, string description, string selectedUsers)
         {
             if (file == null || file.Length <= 0)
             {
@@ -91,6 +90,7 @@ namespace DriveSec.Controllers
 
             try
             {
+
                 var api = new DiskHttpApi(_key);
 
                 // Подготовка пути на диске для сохранения файла
@@ -107,7 +107,7 @@ namespace DriveSec.Controllers
                 }
 
                 //Выгрузка инфы в БД
-                UploadFileDB(file.FileName, false, "", 1);
+                UploadFileDB(file.FileName, false, description, 1);
 
                 return RedirectToAction("Index", new { successMessage = "Файл успешно загружен на Яндекс Диск" });
             }

@@ -6993,23 +6993,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\misch\\.nuget\\packages\\": {},
-    "D:\\Program Files\\Microsoft Visual Studio\\2022\\Shared\\NuGetPackages": {}
+    "C:\\Users\\leha2\\.nuget\\packages\\": {},
+    "D:\\SDK for VS\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\misch\\Documents\\GitHub\\DriveSec\\DriveSec\\DriveSec.csproj",
+      "projectUniqueName": "D:\\Sources\\DriveSec\\DriveSec\\DriveSec\\DriveSec.csproj",
       "projectName": "DriveSec",
-      "projectPath": "C:\\Users\\misch\\Documents\\GitHub\\DriveSec\\DriveSec\\DriveSec.csproj",
-      "packagesPath": "C:\\Users\\misch\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\misch\\Documents\\GitHub\\DriveSec\\DriveSec\\obj\\",
+      "projectPath": "D:\\Sources\\DriveSec\\DriveSec\\DriveSec\\DriveSec.csproj",
+      "packagesPath": "C:\\Users\\leha2\\.nuget\\packages\\",
+      "outputPath": "D:\\Sources\\DriveSec\\DriveSec\\DriveSec\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Program Files\\Microsoft Visual Studio\\2022\\Shared\\NuGetPackages"
+        "D:\\SDK for VS\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\misch\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\leha2\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -7030,11 +7030,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -7079,7 +7074,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
