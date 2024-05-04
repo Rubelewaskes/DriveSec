@@ -5,7 +5,7 @@
 -- Dumped from database version 16.2 (Debian 16.2-1.pgdg120+2)
 -- Dumped by pg_dump version 16rc1
 
--- Started on 2024-04-29 12:56:57
+-- Started on 2024-05-04 14:25:55
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -103,7 +103,7 @@ CREATE TABLE public.folders (
 ALTER TABLE public.folders OWNER TO postgres;
 
 --
--- TOC entry 225 (class 1259 OID 16467)
+-- TOC entry 220 (class 1259 OID 16402)
 -- Name: folders_folder_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -118,7 +118,7 @@ ALTER TABLE public.folders ALTER COLUMN folder_id ADD GENERATED ALWAYS AS IDENTI
 
 
 --
--- TOC entry 220 (class 1259 OID 16403)
+-- TOC entry 221 (class 1259 OID 16403)
 -- Name: users; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -132,7 +132,7 @@ CREATE TABLE public.users (
 ALTER TABLE public.users OWNER TO postgres;
 
 --
--- TOC entry 221 (class 1259 OID 16408)
+-- TOC entry 222 (class 1259 OID 16408)
 -- Name: users_folder; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -147,7 +147,7 @@ CREATE TABLE public.users_folder (
 ALTER TABLE public.users_folder OWNER TO postgres;
 
 --
--- TOC entry 222 (class 1259 OID 16411)
+-- TOC entry 223 (class 1259 OID 16411)
 -- Name: users_mac; Type: TABLE; Schema: public; Owner: postgres
 --
 
@@ -161,7 +161,7 @@ CREATE TABLE public.users_mac (
 ALTER TABLE public.users_mac OWNER TO postgres;
 
 --
--- TOC entry 223 (class 1259 OID 16414)
+-- TOC entry 224 (class 1259 OID 16414)
 -- Name: users_mac_user_mac_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -176,7 +176,7 @@ ALTER TABLE public.users_mac ALTER COLUMN user_mac_id ADD GENERATED ALWAYS AS ID
 
 
 --
--- TOC entry 224 (class 1259 OID 16415)
+-- TOC entry 225 (class 1259 OID 16415)
 -- Name: users_user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
 --
 
@@ -222,8 +222,8 @@ COPY public.folders (folder_id, folder_way, folder_name, folder_description, cre
 
 
 --
--- TOC entry 3394 (class 0 OID 16403)
--- Dependencies: 220
+-- TOC entry 3395 (class 0 OID 16403)
+-- Dependencies: 221
 -- Data for Name: users; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -233,8 +233,8 @@ COPY public.users (user_id, login, password) FROM stdin;
 
 
 --
--- TOC entry 3395 (class 0 OID 16408)
--- Dependencies: 221
+-- TOC entry 3396 (class 0 OID 16408)
+-- Dependencies: 222
 -- Data for Name: users_folder; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -243,8 +243,8 @@ COPY public.users_folder (users_folder_id, user_id, folder_id, role) FROM stdin;
 
 
 --
--- TOC entry 3396 (class 0 OID 16411)
--- Dependencies: 222
+-- TOC entry 3397 (class 0 OID 16411)
+-- Dependencies: 223
 -- Data for Name: users_mac; Type: TABLE DATA; Schema: public; Owner: postgres
 --
 
@@ -267,21 +267,21 @@ SELECT pg_catalog.setval('public.change_history_change_history_id_seq', 1, false
 -- Name: files_file_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.files_file_id_seq', 7, true);
+SELECT pg_catalog.setval('public.files_file_id_seq', 15, true);
 
 
 --
 -- TOC entry 3407 (class 0 OID 0)
--- Dependencies: 225
+-- Dependencies: 220
 -- Name: folders_folder_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.folders_folder_id_seq', 8, true);
+SELECT pg_catalog.setval('public.folders_folder_id_seq', 15, true);
 
 
 --
 -- TOC entry 3408 (class 0 OID 0)
--- Dependencies: 223
+-- Dependencies: 224
 -- Name: users_mac_user_mac_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -290,7 +290,7 @@ SELECT pg_catalog.setval('public.users_mac_user_mac_id_seq', 1, false);
 
 --
 -- TOC entry 3409 (class 0 OID 0)
--- Dependencies: 224
+-- Dependencies: 225
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
@@ -370,12 +370,12 @@ ALTER TABLE ONLY public.change_history
 
 
 --
--- TOC entry 3241 (class 2606 OID 16438)
+-- TOC entry 3241 (class 2606 OID 16472)
 -- Name: files files_folder_id_fkey; Type: FK CONSTRAINT; Schema: public; Owner: postgres
 --
 
 ALTER TABLE ONLY public.files
-    ADD CONSTRAINT files_folder_id_fkey FOREIGN KEY (folder_id) REFERENCES public.folders(folder_id);
+    ADD CONSTRAINT files_folder_id_fkey FOREIGN KEY (folder_id) REFERENCES public.folders(folder_id) ON DELETE CASCADE;
 
 
 --
@@ -414,7 +414,7 @@ ALTER TABLE ONLY public.users_mac
     ADD CONSTRAINT users_mac_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
 
 
--- Completed on 2024-04-29 12:56:57
+-- Completed on 2024-05-04 14:25:56
 
 --
 -- PostgreSQL database dump complete

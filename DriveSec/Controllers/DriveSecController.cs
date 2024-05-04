@@ -31,7 +31,8 @@ namespace DriveSec.Controllers
         private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag";
         private static readonly string _pathstandart = "disk:/DriveSec";
         private static readonly int _userid = 1; // пока тут 1, позже будет обычный userid
-        private static readonly string _path;
+        private static string _path;
+        private static int _actualFolderId;
         static DriveSecController()
         {
             _path = _pathstandart + "/" + _userid;
@@ -48,21 +49,12 @@ namespace DriveSec.Controllers
                     password = _context.Users.Select(a => a.Password).FirstOrDefault()
                 }).ToList();
 
-                if (usersData != null)
-                {
-                    /*ViewData["SuccessMessage"] = "Успешно получены данные о пользователях из базы данных!";*/
-                    ViewData["SuccessMessage"] = "Все гуд!";
-                    ViewData["UsersData"] = usersData;
-                }
-                else
-                {
-                    /*ViewData["ErrorMessage"] = "Ошибка при получении данных о пользователях из базы данных!";*/
-                    ViewData["ErrorMessage"] = "Все не гуд!";
-                }
+                _path = _pathstandart + "/" + _userid;
 
+                _actualFolderId = _userid;
                 // Получение списка файлов в папке с ID = 1
                 var filesInFolder = _context.Files
-                    .Where(file => file.FolderId == 1)//_userid)
+                    .Where(file => file.FolderId == _userid)
                     .ToList();
 
                 // Получение списка папок в папке с ID = 1
@@ -78,7 +70,44 @@ namespace DriveSec.Controllers
             }
         }
 
-       
+        public IActionResult OpenFolder(string folderName)
+        {
+            Console.WriteLine(folderName);
+            try
+            {
+                // Получение данных о пользователях
+                var usersData = _context.Users.Select(c => new ChosenViewModel
+                {
+                    login = _context.Users.Select(a => a.Login).FirstOrDefault(),
+                    password = _context.Users.Select(a => a.Password).FirstOrDefault()
+                }).ToList();
+
+                int folderId = _context.Folders
+                    .Where(d => d.FolderName == folderName && d.FolderWay == _path)
+                    .Select(s => s.FolderId)
+                    .FirstOrDefault();
+                
+                var filesInFolder = _context.Files
+                    .Where(file => file.FolderId == folderId)
+                    .ToList();
+
+                _path += "/" + folderName;
+                _actualFolderId = folderId;
+
+                // Получение списка папок в папке
+                var foldersInFolder = _context.Folders.Where(d => d.FolderWay == _path)
+                    .ToList();
+
+                return View("Index", (filesInFolder, foldersInFolder));
+            }
+            catch (Exception ex)
+            {
+                ViewData["ErrorMessage"] = $"Ошибка: {ex.Message}";
+                return View();
+            }
+        }
+
+
 
 
         [HttpPost]
@@ -107,7 +136,7 @@ namespace DriveSec.Controllers
                 }
 
                 //Выгрузка инфы в БД
-                UploadFileDB(file.FileName, false, "", 1);
+                UploadFileDB(file.FileName, false, "", _actualFolderId);
 
                 return RedirectToAction("Index", new { successMessage = "Файл успешно загружен на Яндекс Диск" });
             }
