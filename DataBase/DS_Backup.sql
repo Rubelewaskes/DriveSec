@@ -3,9 +3,8 @@
 --
 
 -- Dumped from database version 16.2 (Debian 16.2-1.pgdg120+2)
--- Dumped by pg_dump version 16rc1
-
--- Started on 2024-05-04 14:25:55
+-- Dumped by pg_dump version 16.2
+-- Started on 2024-04-30 17:32:49
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -207,6 +206,14 @@ COPY public.change_history (change_history_id, file_id, user_id, change_descript
 --
 
 COPY public.files (file_id, file_name, creation_date, virus_availiability, virus_description, uploader_id, folder_id) FROM stdin;
+11	Схема упрощенка.drawio	2024-04-30 12:51:33.189873	f		1	1
+12	воркшапка.png	2024-04-30 12:53:05.681077	f		1	1
+13	y.png	2024-04-30 13:46:57.327823	f		1	1
+14	2222.png	2024-04-30 13:49:54.405013	f		1	1
+15	UF.jpg	2024-04-30 13:52:16.847603	f		1	1
+16	33.png	2024-04-30 14:01:07.838024	f		1	1
+17	1виджет.png	2024-04-30 16:57:22.179171	f	TestOpisanie	1	1
+18	Хакатон_шаблон.pptx	2024-04-30 17:04:24.84523	f	asdasdasd	1	1
 \.
 
 
@@ -218,6 +225,8 @@ COPY public.files (file_id, file_name, creation_date, virus_availiability, virus
 
 COPY public.folders (folder_id, folder_way, folder_name, folder_description, creation_date) FROM stdin;
 1	disk:/DriveSec	1		2024-04-25 11:29:27.758311
+9	disk:/DriveSec/1	test		2024-04-30 11:52:04.794828
+10	disk:/DriveSec/1	папочка		2024-04-30 17:02:57.252281
 \.
 
 
@@ -229,6 +238,13 @@ COPY public.folders (folder_id, folder_way, folder_name, folder_description, cre
 
 COPY public.users (user_id, login, password) FROM stdin;
 1	test	test
+2	lehaBeketov	1234
+3	Yakub Qamar ad-din dibiazah	123
+4	Khalid khasimiri	123
+5	Khidir kawarita	123
+6	Ismail Ahmad kanabawi	123
+7	Usman Abdul Jalil sisha	123
+8	Muhammad sumbul	123
 \.
 
 
@@ -267,7 +283,8 @@ SELECT pg_catalog.setval('public.change_history_change_history_id_seq', 1, false
 -- Name: files_file_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.files_file_id_seq', 15, true);
+
+SELECT pg_catalog.setval('public.files_file_id_seq', 18, true);
 
 
 --
@@ -276,7 +293,7 @@ SELECT pg_catalog.setval('public.files_file_id_seq', 15, true);
 -- Name: folders_folder_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.folders_folder_id_seq', 15, true);
+SELECT pg_catalog.setval('public.folders_folder_id_seq', 10, true);
 
 
 --
@@ -294,7 +311,7 @@ SELECT pg_catalog.setval('public.users_mac_user_mac_id_seq', 1, false);
 -- Name: users_user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
 --
 
-SELECT pg_catalog.setval('public.users_user_id_seq', 1, false);
+SELECT pg_catalog.setval('public.users_user_id_seq', 8, true);
 
 
 --
@@ -414,7 +431,7 @@ ALTER TABLE ONLY public.users_mac
     ADD CONSTRAINT users_mac_user_id_fkey FOREIGN KEY (user_id) REFERENCES public.users(user_id);
 
 
--- Completed on 2024-05-04 14:25:56
+-- Completed on 2024-04-30 17:32:49
 
 --
 -- PostgreSQL database dump complete

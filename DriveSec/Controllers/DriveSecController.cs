@@ -45,12 +45,11 @@ namespace DriveSec.Controllers
                 // Получение данных о пользователях
                 var usersData = _context.Users.Select(c => new ChosenViewModel
                 {
-                    login = _context.Users.Select(a => a.Login).FirstOrDefault(),
-                    password = _context.Users.Select(a => a.Password).FirstOrDefault()
+                    login = c.Login,
+                    password = c.Password
                 }).ToList();
 
                 _path = _pathstandart + "/" + _userid;
-
                 _actualFolderId = _userid;
                 // Получение списка файлов в папке с ID = 1
                 var filesInFolder = _context.Files
@@ -107,11 +106,8 @@ namespace DriveSec.Controllers
             }
         }
 
-
-
-
-        [HttpPost]
-        public async Task<IActionResult> UploadFile(IFormFile file)
+            [HttpPost]
+        public async Task<IActionResult> UploadFile(IFormFile file, string description, string selectedUsers)
         {
             if (file == null || file.Length <= 0)
             {
@@ -120,6 +116,7 @@ namespace DriveSec.Controllers
 
             try
             {
+
                 var api = new DiskHttpApi(_key);
 
                 // Подготовка пути на диске для сохранения файла
