@@ -80,7 +80,8 @@ namespace DriveSec.Controllers
         }
 
 
-            [HttpPost]
+        [HttpPost]
+        [DisableRequestSizeLimit]
         public async Task<IActionResult> UploadFile(IFormFile file, string description, string selectedUsers)
         {
             if (file == null || file.Length <= 0)
