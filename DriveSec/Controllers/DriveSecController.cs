@@ -49,6 +49,16 @@ namespace DriveSec.Controllers
                     password = c.Password
                 }).ToList();
 
+                if (usersData != null)
+                {
+                    ViewData["SuccessMessage"] = "Все гуд!";
+                    ViewData["UsersData"] = usersData;
+                }
+                else
+                {
+                    ViewData["ErrorMessage"] = "Все не гуд!";
+                }
+
                 _path = _pathstandart + "/" + _userid;
                 _actualFolderId = _userid;
                 // Получение списка файлов в папке с ID = 1
