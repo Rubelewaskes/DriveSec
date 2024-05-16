@@ -1,0 +1,90 @@
+@import "../lib/bootstrap/dist/scss/_functions.scss";
+@import "../lib/bootstrap/dist/scss/_variables.scss";
+
+:root {
+    --bs-body-font-family: "Montserrat", sans-serif;
+}
+
+.bg-main {
+    background-color: #373539;
+}
+
+.logo {
+    margin-left: 50px;
+}
+
+.searchfield {
+    margin-left: 70px;
+    margin-top: 10px;
+    height: 50px;
+    width: 450px;
+}
+
+.file-item {
+    padding: 10px;
+    font-weight: 300;
+    font-size: 20px;
+}
+
+.tgle_menu {
+    height: 20px;
+    width: 30px;
+    margin-top: 7px;
+    padding-top: 0px;
+    --bs-btn-font-size: .75rem;
+}
+
+.FName {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.btn-tertiary {
+    color: #555;
+    padding: 0;
+    line-height: 35px;
+    width: 224px;
+    display: block;
+    border: 2px solid #555;
+    &:hover, &:focus
+
+{
+    color: lighten(#555, 20%);
+    border-color: lighten(#555, 100%);
+}
+
+}
+
+.input-file {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    + .js-labelFile
+
+{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 10px;
+    cursor: pointer;
+    .icon:before
+
+{
+    content: "\F603";
+}
+
+&.has-file {
+    .icon:before
+
+{
+    content: "\F26E";
+    color: #5AAC7B;
+}
+
+}
+}
+}

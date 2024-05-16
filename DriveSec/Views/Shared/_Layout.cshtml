@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DriveSec.styles.css" asp-append-version="true" />
+	<link href="~/lib/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+	<link href="~/lib/bootstrap-icons/font/bootstrap-icons.min.css" rel="stylesheet" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Sarina&display=swap"
@@ -20,13 +22,11 @@
         <header class="bg-header text-white">
             <div class="d-flex flex-column flex-md-row align-items-center">
                 <a class="logo d-flex align-items-center link-light text-decoration-none" asp-area="" asp-controller="Home" asp-action="Index">
-                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="175"
-                         height="47" viewBox="0 0 175 47">
-                        <image id="Эллипс_1" data-name="Эллипс 1" width="175" height="47"
-                               xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAAK8AAAAvCAYAAACVIpqtAAAAx0lEQVR4nO3dMQrDMBAAQTno/19WwJU6CwIhG2ZqF0YsV6jQXWutNc5ch9/Bp46afDlmqub23yYrv+KpxXsym7xkiZcs8ZIlXrLES5Z4yRIvWdP9LkF3syYvWeIlS7xkiZcs8ZIlXrLES5Z4yRIvWeIlS7xkiZcs8ZIlXrLES5Z4yRIvWeIlS7xkiZcs8ZIlXrLES5Z4yRIvWeIla27LKzz7RIVn/WkTL1niJUu8ZImXLPGSJV6y9vWtT8uK3QPzLRZn88fGGG8zJgpjgXlr6wAAAABJRU5ErkJggg==" />
-                        <image id="SwapSec" x="8" y="8" width="160" height="35"
-                               xlink:href="data:img/png;base64,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" />
+                    <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="186" height="47" viewBox="0 0 186 47">
+                        <image id="Эллипс_1" data-name="Эллипс 1" width="186" height="47" xlink:href="data:img/png;base64,iVBORw0KGgoAAAANSUhEUgAAALoAAAAvCAYAAABUpdABAAAA2UlEQVR4nO3dQQqDMBRAwSi9/5UtCF1rLJTqm1mLoDz+IkZdtm0bE84evMycFL5wqsnVHabgdfEaTWz+xVGL+8Q30UkQOglCJ0HoJAidBKGTIHQSZtfRrZ9zN3uzJjoJQidB6CQInQShkyB0EoROgtBJEDoJQidB6CQInQShkyB0ElZbbykw0UkQOgnrxPcU4bZMdBKEToLQSRA6CUInQegkCJ0EoZMw+0m6z8Ml+2O4C792oUPoJAidBKGTIHQShE6C0Em4+ov0o5c1rLPzK6deHDLReb4xxhsrWQtjmzJlwQAAAABJRU5ErkJggg==" />
+                        <image id="DriveSec" x="23" y="7" width="154" height="29" xlink:href="data:img/png;base64,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" />
                     </svg>
+
                 </a>
 
                 <form class="searchfield d-flex">
@@ -61,16 +61,16 @@
                     @* <p>mischa.stolbov@yandex.ru</p> *@
                     @if (ViewData["SuccessMessage"] != null)
                     {
-                        <p class="text-success">@ViewData["SuccessMessage"]</p>
+                        <p class="FName text-success" style="max-width: 161px">@ViewData["SuccessMessage"]</p>
                     }
                     @if (ViewData["SuccessMessage"] != null)
                     {
-                        <p class="text-danger">@ViewData["ErrorMessage"]</p>
+                        <p class="FName text-danger" style="max-width: 161px">@ViewData["ErrorMessage"]</p>
                     }
 
                     @if (ViewData["UsersData"] != null)
                     {
-                        <h1>test</h1>
+                        <h1 class="FName" style="max-width: 161px">Михаил Столбов</h1>
                     }
                     @* <h1>Михаил С.</h1> *@
                 </div>
@@ -176,9 +176,13 @@
                     <form action="/DriveSec/UploadFile" method="post">
                     <div class="modal-body">
                         <div class="container ps-0 d-flex flex-md-row">
-                            <div class="col-auto" style="width: 234px">
-                                <label for="filik" id="filikchose">Файл для отправки</label> <br>
-                                <input type="file" name="file" class="custom-file-input" id="filik" />
+                            <div class="col-auto" style="width: 225px">
+                                <label>Файл для отправки:</label>
+                                <input type="file" name="file" id="filik" class="input-file">
+                                <label for="filik" id="filikchose" class="btn btn-tertiary js-labelFile">
+                                    <i class="icon bi bi-upload"></i>
+                                    <span class="js-fileName">Выбрать файл</span>
+                                </label>
                                 <input type="hidden" name="path" value="ваш_путь" />
                                 <input type="hidden" name="proc" value="Upload" />
                             </div>
@@ -235,58 +239,6 @@
              @RenderBody()
          </main>
     </div>
-
-    <script>
-        document.getElementById('addUserButton').addEventListener('click', function () {
-            var selectedOptions = Array.from(document.getElementById('selectedUsers').selectedOptions).map(option => option.value);
-            var usersField = document.getElementById('users');
-            var currentUsers = usersField.value.split(',').map(user => user.trim());
-            selectedOptions.forEach(option => {
-                if (!currentUsers.includes(option)) {
-                    currentUsers.push(option);
-                }
-            });
-            usersField.value = currentUsers.join(', ');
-        });
-
-        document.getElementById('removeUserButton').addEventListener('click', function () {
-            var selectedOptions = Array.from(document.getElementById('selectedUsers').selectedOptions).map(option => option.value);
-            var usersField = document.getElementById('users');
-            var currentUsers = usersField.value.split(',').map(user => user.trim());
-            var hasTestUser = currentUsers.includes('test');
-            selectedOptions = selectedOptions.filter(option => !(hasTestUser && option === 'test'));
-
-            selectedOptions.forEach(option => {
-                var index = currentUsers.indexOf(option);
-                if (index !== -1) {
-                    currentUsers.splice(index, 1);
-                }
-            });
-
-            usersField.value = currentUsers.join(', ');
-        });
-
-        document.getElementById('uploadButton').addEventListener('click', function () {
-            var description = document.getElementById('description').value;
-            var selectedUsers = Array.from(document.getElementById('selectedUsers').selectedOptions).map(option => option.value);
-            $.ajax({
-                url: '/DriveSec/UploadFile',
-                method: 'POST',
-                data: {
-                    description: description,
-                    selectedUsers: selectedUsers.join(',')
-                },
-                success: function (response) {
-                    // Обработка успешного ответа от сервера
-                },
-                error: function (xhr, status, error) {
-                    // Обработка ошибки
-                }
-            });
-        });
-
-    </script>
-
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
