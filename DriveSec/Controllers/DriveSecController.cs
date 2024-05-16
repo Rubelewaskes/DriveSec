@@ -124,7 +124,6 @@ namespace DriveSec.Controllers
             {
                 return BadRequest("Не выбран файл для загрузки");
             }
-
             try
             {
 
@@ -146,7 +145,23 @@ namespace DriveSec.Controllers
                 //Выгрузка инфы в БД
                 UploadFileDB(file.FileName, false, "", _actualFolderId);
 
-                return RedirectToAction("Index", new { successMessage = "Файл успешно загружен на Яндекс Диск" });
+                if (_actualFolderId==1)
+                {
+                    return RedirectToAction("Index", new { successMessage = "Файл успешно загружен на Яндекс Диск" });
+                }
+                else
+                {
+                    string folderName = _context.Folders
+                        .Where(f => f.FolderId == _actualFolderId)
+                        .Select(s => s.FolderName)
+                        .FirstOrDefault();
+                    string helpPath = "/" + folderName;
+                    if (_path.EndsWith(helpPath))
+                    {
+                        _path = _path.Substring(0, _path.Length - helpPath.Length);
+                    }
+                    return RedirectToAction(nameof(OpenFolder), new {folderName});
+                }
             }
             catch (Exception ex)
             {
@@ -204,7 +219,12 @@ namespace DriveSec.Controllers
                 //Выгрузка инфы в БД
                 UploadFolderDB(folderName, "", _path);
 
-                return RedirectToAction("Index", new { successMessage = $"Папка '{folderName}' успешно создана на Яндекс Диске" });
+                string helpPath = "/" + folderName;
+                if (_path.EndsWith(helpPath))
+                {
+                    _path = _path.Substring(0, _path.Length - helpPath.Length);
+                }
+                return RedirectToAction(nameof(OpenFolder), new { folderName });
             }
             catch (Exception ex)
             {
@@ -243,7 +263,16 @@ namespace DriveSec.Controllers
 
                 // Скачиваем файл и сохраняем его по указанному пути
                 await api.Files.DownloadFileAsync(_path + "/" + filename, filename);
-                return RedirectToAction("Index", new { successMessage = "Файл успешно загружен на Ваш компьютер" });
+                string folderName = _context.Folders
+                    .Where(f => f.FolderId == _actualFolderId)
+                    .Select(s => s.FolderName)
+                    .FirstOrDefault();
+                string helpPath = "/" + folderName;
+                if (_path.EndsWith(helpPath))
+                {
+                    _path = _path.Substring(0, _path.Length - helpPath.Length);
+                }
+                return RedirectToAction(nameof(OpenFolder), new { folderName });
             }
             catch (Exception ex)
             {
@@ -288,7 +317,16 @@ namespace DriveSec.Controllers
 
                 DeleteFileDB(fileId);
 
-                return RedirectToAction("Index", new { successMessage = "Файл успешно удален с Яндекс Диска" });
+                string folderName = _context.Folders
+                    .Where(f => f.FolderId == _actualFolderId)
+                    .Select(s => s.FolderName)
+                    .FirstOrDefault();
+                string helpPath = "/" + folderName;
+                if (_path.EndsWith(helpPath))
+                {
+                    _path = _path.Substring(0, _path.Length - helpPath.Length);
+                }
+                return RedirectToAction(nameof(OpenFolder), new { folderName });
             }
             catch (Exception ex)
             {
