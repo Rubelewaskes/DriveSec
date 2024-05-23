@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using YandexDisk.Client.Clients;
 using YandexDisk.Client.Http;
 using YandexDisk.Client.Protocol;
+using QRCoder;
 
 namespace DriveSec.Controllers
 {
@@ -404,6 +405,22 @@ namespace DriveSec.Controllers
 
             }
         }
-            
+
+       /* public IActionResult QRGenerate(string inputText)
+        {
+            using (MemoryStream ms = new MemoryStream())
+            {
+                QRCodeGenerator oQRCodeGenerator = new QRCodeGenerator();
+                QRCodeData oQRCodeData = oQRCodeGenerator.CreateQrCode(inputText, QRCodeGenerator.ECCLevel.Q);
+                SvgQRCode oQRCode = new SvgQRCode(oQRCodeData);
+                using (Bitmap oBitmap = oQRCode GetGraphic(20))
+            {
+                    oBitmap.Save(ms, ImageFormat.Png);
+                    ViewBag.QRCode = "data: image/png;base64," + Convert.ToBase64String(ms.ToArray());
+                }
+            }
+            return View();
+        }
+       */
     }
 }

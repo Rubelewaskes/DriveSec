@@ -736,6 +736,15 @@
           }
         }
       },
+      "QRCoder/1.5.1": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/QRCoder.dll": {}
+        },
+        "runtime": {
+          "lib/net6.0/QRCoder.dll": {}
+        }
+      },
       "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
         "type": "package",
         "runtimeTargets": {
@@ -3355,6 +3364,27 @@
         "npgsql.entityframeworkcore.postgresql.8.0.2.nupkg.sha512",
         "npgsql.entityframeworkcore.postgresql.nuspec",
         "postgresql.png"
+      ]
+    },
+    "QRCoder/1.5.1": {
+      "sha512": "+v8VntytuDw4R1nCNJkSA7SWSizJoQfiByV1+nUjOwrDZEuaxefG73aKuuQjpaGtoZ7qlXpRbK70C23m1h3WLw==",
+      "type": "package",
+      "path": "qrcoder/1.5.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "lib/net35/QRCoder.dll",
+        "lib/net40/QRCoder.dll",
+        "lib/net5.0-windows7.0/QRCoder.dll",
+        "lib/net5.0/QRCoder.dll",
+        "lib/net6.0-windows7.0/QRCoder.dll",
+        "lib/net6.0/QRCoder.dll",
+        "lib/netstandard1.3/QRCoder.dll",
+        "lib/netstandard2.0/QRCoder.dll",
+        "nuget-icon.png",
+        "nuget-readme.md",
+        "qrcoder.1.5.1.nupkg.sha512",
+        "qrcoder.nuspec"
       ]
     },
     "runtime.debian.8-x64.runtime.native.System.Security.Cryptography.OpenSsl/4.3.0": {
@@ -6989,27 +7019,28 @@
       "Microsoft.EntityFrameworkCore >= 8.0.4",
       "Microsoft.EntityFrameworkCore.Tools >= 8.0.4",
       "Npgsql.EntityFrameworkCore.PostgreSQL >= 8.0.2",
+      "QRCoder >= 1.5.1",
       "YandexDisk.Client >= 1.3.27"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\misch\\.nuget\\packages\\": {},
-    "D:\\Program Files\\Microsoft Visual Studio\\2022\\Shared\\NuGetPackages": {}
+    "C:\\Users\\Grisha\\.nuget\\packages\\": {},
+    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\misch\\Documents\\GitHub\\DriveSec\\DriveSec\\DriveSec.csproj",
+      "projectUniqueName": "C:\\Users\\Grisha\\Documents\\GitHub\\DriveSec\\DriveSec\\DriveSec.csproj",
       "projectName": "DriveSec",
-      "projectPath": "C:\\Users\\misch\\Documents\\GitHub\\DriveSec\\DriveSec\\DriveSec.csproj",
-      "packagesPath": "C:\\Users\\misch\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\misch\\Documents\\GitHub\\DriveSec\\DriveSec\\obj\\",
+      "projectPath": "C:\\Users\\Grisha\\Documents\\GitHub\\DriveSec\\DriveSec\\DriveSec.csproj",
+      "packagesPath": "C:\\Users\\Grisha\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Grisha\\Documents\\GitHub\\DriveSec\\DriveSec\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "D:\\Program Files\\Microsoft Visual Studio\\2022\\Shared\\NuGetPackages"
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\misch\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Grisha\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -7030,11 +7061,6 @@
         "warnAsError": [
           "NU1605"
         ]
-      },
-      "restoreAuditProperties": {
-        "enableAudit": "true",
-        "auditLevel": "low",
-        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -7054,6 +7080,10 @@
           "Npgsql.EntityFrameworkCore.PostgreSQL": {
             "target": "Package",
             "version": "[8.0.2, )"
+          },
+          "QRCoder": {
+            "target": "Package",
+            "version": "[1.5.1, )"
           },
           "YandexDisk.Client": {
             "target": "Package",
@@ -7079,7 +7109,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.204/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.100/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
