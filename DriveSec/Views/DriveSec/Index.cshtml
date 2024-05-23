@@ -43,7 +43,7 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <form method="post" asp-action="DeleteFolder" asp-controller="DriveSec">
+                        <form method="post" asp-action="DeleteFolder" asp-controller="DriveSec" onsubmit="showImageModal(event)">
                             <input type="hidden" name="folderId" value="@folder.FolderId" />
                             <button type="submit" class="dropdown-item">Удалить</button>
                         </form>
@@ -71,13 +71,13 @@
                 </button>
                 <ul class="dropdown-menu">
                     <li>
-                        <form method="post" asp-action="DownloadFile" asp-controller="DriveSec">
+                        <form method="post" asp-action="DownloadFile" asp-controller="DriveSec" onsubmit="showImageModal(event)">
                             <input type="hidden" name="fileId" value="@file.FileId" />
                             <button type="submit" class="dropdown-item">Скачать</button>
                         </form>
                     </li>
                     <li>
-                        <form method="post" asp-action="DeleteFile" asp-controller="DriveSec">
+                        <form method="post" asp-action="DeleteFile" asp-controller="DriveSec" onsubmit="showImageModal(event)">
                             <input type="hidden" name="fileId" value="@file.FileId" />
                             <button type="submit" class="dropdown-item">Удалить</button>
                         </form>
@@ -88,3 +88,30 @@
         </div>
     }
 </section>
+
+<!-- Модальное окно QR -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <img src="~/QR.png" class="img-fluid" alt="Загрузка...">
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Модальное окно QR -->
+
+
+<script>
+    function showImageModal(event) {
+        event.preventDefault();
+
+        var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
+        imageModal.show();
+
+        setTimeout(function () {
+            imageModal.hide();
+            event.target.submit();
+        }, 5000);
+    }
+</script>

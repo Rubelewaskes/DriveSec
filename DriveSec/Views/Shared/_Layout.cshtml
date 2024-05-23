@@ -92,14 +92,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navigation navbar-nav mr-auto" style="height: 45vh">
                     <li>
-                            <button class="upld_btn btn btn-danger btn-lg" style="position: relative; overflow: hidden">
+                        <button class="upld_btn btn btn-danger btn-lg" style="position: relative; overflow: hidden" onclick="showImageModal(event)" data-bs-toggle="modal" data-bs-target="#fileDwnldModal">
                                 Загрузить
                             </button>
 
 
                     </li>
                     <li>
-                        <button type="button" class="upld_fld_btn btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#folderCreateModal">
+                        <button type="button" class="upld_fld_btn btn btn-light btn-lg" onclick="showImageModal(event)" data-bs-toggle="modal" data-bs-target="#folderCreateModal">
                             Создать папку
                         </button>
 
@@ -233,6 +233,7 @@
             </div>
         </div> 
         <!-- Модальное окно файла -->
+
         <!-- Модальное окно QR -->
         <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
@@ -259,20 +260,16 @@
 </html>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    function showImageModal(event) {
+        event.preventDefault();
+
         var imageModal = new bootstrap.Modal(document.getElementById('imageModal'));
-        var fileDwnldModal = new bootstrap.Modal(document.getElementById('fileDwnldModal'));
+        imageModal.show();
 
-        document.querySelectorAll('.upld_btn').forEach(button => {
-            button.addEventListener('click', function () {
-                imageModal.show();
-
-                setTimeout(function () {
-                    imageModal.hide();
-                    fileDwnldModal.show();
-                }, 5000);
-            });
-        });
-    });
+        setTimeout(function () {
+            imageModal.hide();
+            event.target.submit();
+        }, 5000);
+    }
 </script>
 
