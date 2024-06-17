@@ -92,14 +92,14 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navigation navbar-nav mr-auto" style="height: 45vh">
                     <li>
-                        <button class="upld_btn btn btn-danger btn-lg" style="position: relative; overflow: hidden" onclick="showImageModal(event)" data-bs-toggle="modal" data-bs-target="#fileDwnldModal">
+                        <button class="upld_btn btn btn-danger btn-lg" style="position: relative; overflow: hidden" data-bs-toggle="modal" data-bs-target="#fileDwnldModal">
                                 Загрузить
                             </button>
 
 
                     </li>
                     <li>
-                        <button type="button" class="upld_fld_btn btn btn-light btn-lg" onclick="showImageModal(event)" data-bs-toggle="modal" data-bs-target="#folderCreateModal">
+                        <button type="button" class="upld_fld_btn btn btn-light btn-lg" data-bs-toggle="modal" data-bs-target="#folderCreateModal">
                             Создать папку
                         </button>
 
@@ -141,7 +141,7 @@
         <div class="modal fade text-black" id="folderCreateModal" tabindex="-1" aria-labelledby="folderCreateModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <form method="post" asp-action="CreateFolder" asp-controller="DriveSec" class="modal-content">
+                <form method="post" asp-action="CreateFolder" asp-controller="DriveSec" class="modal-content" onsubmit="showImageModal(event)">
                     <div class="modal-header">
                         <h5 class="modal-title" id="folderCreateModalLabel">Создание папки</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
@@ -167,7 +167,7 @@
          <div class="modal fade text-black" id="fileDwnldModal" tabindex="-1" aria-labelledby="fileDwnldModalLabel"
              aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
-                <form class="modal-content" enctype="multipart/form-data" asp-action="UploadFile" asp-controller="DriveSec">
+                <form class="modal-content" enctype="multipart/form-data" asp-action="UploadFile" asp-controller="DriveSec" onsubmit="showImageModal(event)">
                     <div class="modal-header">
                         <h5 class="modal-title" id="fileDwnldModalLabel">Загрузка файла</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
