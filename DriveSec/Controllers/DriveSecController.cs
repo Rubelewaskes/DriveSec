@@ -29,7 +29,7 @@ namespace DriveSec.Controllers
             public string password { get; set; }
         }
 
-        private readonly string _key = "y0_AgAAAABx6uBRAAudwwAAAAEB1aPlAABsDgxMSDBMOrHUa6QLba4nZneYag";
+        private readonly string _key = "";//Введите свой ключ к API
         private static readonly string _pathstandart = "disk:/DriveSec";
         private static readonly int _userid = 1; // пока тут 1, позже будет обычный userid
         private static string _path;
